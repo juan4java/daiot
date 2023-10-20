@@ -1,0 +1,62 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{title}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+
+  <ion-card>
+    <ion-card-header color="primary">
+      <ion-card-title>Nombre : {{dispositivo.nombre}} - Ultimo envío : {{estado | timePipe}}</ion-card-title>
+      
+
+    </ion-card-header>
+
+    <ion-list>
+    <div *ngFor="let lts of lastTimeserie">
+      <ion-item>
+        <ion-label>ID : {{lts.device_id}}</ion-label>
+        <ion-label>{{lts.meassure}}</ion-label>
+        <ion-label>Fecha {{lts.timestamp | timePipe}}</ion-label>
+        <ion-badge color="primary">Valor {{lts.value}}</ion-badge>
+      </ion-item>
+    </div>
+    </ion-list>
+
+    <div id="highcharts" style="width:100%; height:300px;"></div>
+    
+  </ion-card>
+  <ion-content class="ion-padding">
+    
+    <ion-item>
+      <ion-label fixed class='fixedLabel'>Ventana de tiempo en minutos : </ion-label> 
+      <ion-select placeholder="10" [(ngModel)]="minuteSelect">
+        <div *ngFor="let m of minutes">  
+          <ion-select-option value={{m}}>{{m}}</ion-select-option>
+        </div>
+      </ion-select>
+    </ion-item>
+
+    <div>
+      <ion-button color="warning" routerLink="/home" ><ion-icon name="arrow-back-outline"></ion-icon>Volver</ion-button>
+      <ion-button id="open-toast" color="primary" (click)="updateGraph()" [disabled]="false"><ion-icon slot="start" name="refresh"></ion-icon>Actualizar</ion-button>
+      <ion-button id="status-button" color="tertiary" (click)="forceDevice()" [disabled]="false" ><ion-icon slot="start" name="paper-plane"></ion-icon>Forzar Envío</ion-button>
+      <ion-button id="onoff-button" color="tertiary" (click)="onoffDevice(1)" [disabled]="false" ><ion-icon slot="start" name="star"></ion-icon>Encender</ion-button>
+      <ion-button id="onoff-button" color="tertiary" (click)="onoffDevice(0)" [disabled]="false" ><ion-icon slot="start" name="star-outline"></ion-icon>Apagar</ion-button>
+   
+    </div>
+    <!-- <div *ngIf="estado==1">
+      <ion-button color="warning" routerLink="/home" ><ion-icon name="arrow-back-outline"></ion-icon>Volver</ion-button>
+      <ion-button id="open-toast" color="secondary" (click)="accionarValvula(0)" ><ion-icon slot="start" name="lock-closed"></ion-icon>Cerrar</ion-button>
+      <ion-button color="tertiary" routerLink="/medicion/historico/{{dispositivo.equipoId}}" ><ion-icon slot="start" name="book"></ion-icon>Historico</ion-button>
+    </div> -->
+     </ion-content>
+</ion-content>

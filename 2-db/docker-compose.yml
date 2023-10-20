@@ -1,0 +1,35 @@
+version: '0.1'
+
+services:
+
+    daiot-mysql-server2:
+        image:                   mysql:5.7
+        hostname:                daiot-mysql-server2
+        environment:
+            MYSQL_ROOT_PASSWORD: userpass
+        container_name:          daiot-mysql-server2
+        volumes:
+            -                    ./dumps:/docker-entrypoint-initdb.d
+            -                    ./data:/var/lib/mysql
+        networks:
+            -                    daiot-net
+        ports:
+            -                    "3306:3306"
+
+    daiot-mysql-admin2:
+        image:                   phpmyadmin/phpmyadmin
+        environment: 
+            PMA_HOST:            daiot-mysql-server2
+            PMA_PORT:            3306
+            MYSQL_ROOT_PASSWORD: userpass
+        container_name:          daiot-mysql-admin2
+        networks:
+            -                    daiot-net
+        depends_on:
+            -                    daiot-mysql-server2
+        ports:
+            -                    "8001:80"
+      
+networks:
+    daiot-net:
+        driver:                  bridge

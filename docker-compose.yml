@@ -1,0 +1,63 @@
+version: '0.1'
+
+services:
+
+    daiot-ionic-ui:
+        #image: 0-tp_final-daiot-ionic-ui
+        build:
+           context:                ./0-frontend
+           dockerfile:             Dockerfile
+        ports:
+            -                       "9000:8100"
+        container_name:           daiot-ionic-ui
+        volumes:
+            -                      ./0-frontend:/0-frontend
+            -                     /0-frontend/node_modules
+        command:                  ionic serve --external
+
+    daiot-node-backend:
+        image:                   abassi/nodejs-server:10.0-dev
+        container_name:          daiot-node-backend
+        volumes:
+            -                    ./1-backend:/home/node/app/src
+            -                    ./1-backend:/home/node/app/static
+        networks:
+            -                    daiot-net
+        depends_on:
+            -                    daiot-mysql-server
+        ports: 
+            -                    "8000:3000"
+        command:                 nodemon /home/node/app/src/index.js
+
+    daiot-mysql-server:
+        image:                   mysql:5.7
+        hostname:                daiot-mysql-server
+        environment:
+            MYSQL_ROOT_PASSWORD: userpass
+        container_name:          daiot-mysql-server
+        volumes:
+            -                    ./2-db/dumps:/docker-entrypoint-initdb.d
+            -                    ./2-db/data:/var/lib/mysql
+        networks:
+            -                    daiot-net
+        ports:
+            -                    "3306:3306"
+
+    daiot-mysql-admin:
+        image:                   phpmyadmin/phpmyadmin
+        environment: 
+            PMA_HOST:            daiot-mysql-server
+            PMA_PORT:            3306
+            MYSQL_ROOT_PASSWORD: userpass
+        container_name:          daiot-mysql-admin
+        networks:
+            -                    daiot-net
+        depends_on:
+            -                    daiot-mysql-server
+        ports:
+            -                    "8001:80"
+      
+
+networks:
+    daiot-net:
+        driver:                  bridge

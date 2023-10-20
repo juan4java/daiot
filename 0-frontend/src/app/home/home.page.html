@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      {{title}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{title}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-card>
+    <ion-card-header color="primary">
+      <ion-card-title>Sensores</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <div *ngFor="let dispositivo of getArray()">
+
+          <ion-item >
+            <ion-avatar slot="start">
+              <img alt="Tipo" src="../assets/img/{{dispositivo.tipoId}}.jpg" />
+            </ion-avatar>
+
+            <ion-label  class=''>{{dispositivo.equipoId}} -  {{dispositivo.nombre}}</ion-label>
+            &nbsp; &nbsp; &nbsp;
+            <ion-label  class=''>  {{dispositivo.ubicacion}} - Tipo :{{dispositivo.tipoId}}</ion-label>
+            <ion-card-content>
+              <ion-button routerLink="/dispositivo/{{dispositivo.equipoId}}">Detalle</ion-button>
+              <ion-button routerLink="/registro/{{dispositivo.equipoId}}" color="secondary">Ajuste</ion-button>
+            </ion-card-content>
+          </ion-item>
+        
+        </div>
+  
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <ion-button routerLink="/registro/0" color="secondary">Crear</ion-button>
+
+</ion-content>

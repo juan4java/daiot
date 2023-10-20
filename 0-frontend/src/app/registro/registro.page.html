@@ -1,0 +1,64 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{title}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-card-header color="primary">
+      <ion-card-title>Equipo</ion-card-title>
+    </ion-card-header>
+
+    <ion-list>
+      <ion-item>
+        <ion-label fixed class='fixedLabel'>Nombre : </ion-label> 
+        <ion-input label="Default input"  [(ngModel)]="nombre" value={{dispositivo.nombre}}></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label fixed class='fixedLabel'>Ubicación: </ion-label> 
+        <ion-input label="Input with placeholder" placeholder={{dispositivo.ubicacion}} [(ngModel)]="ubicacion" value={{dispositivo.ubicacion}}></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label fixed class='fixedLabel'>ID : </ion-label> 
+        <ion-input label="Input with value" [(ngModel)]="equipoId" value={{dispositivo.equipoId}}></ion-input>
+      </ion-item>
+    </ion-list>
+
+
+    <ion-list>
+      <ion-item>
+        <ion-label fixed class='fixedLabel'>Tipo de equipo : </ion-label> 
+        <ion-select placeholder="On-Off" [(ngModel)]="typeDeviceSelect">
+          <div slot="label">Tipo de Equipo<ion-text color="danger">(Required)</ion-text></div>
+          <ion-select-option value="1">On-Off</ion-select-option>
+          <ion-select-option value="2">Dial</ion-select-option>
+          <ion-select-option value="3">Ligth</ion-select-option>
+          <ion-select-option value="4">Bulb</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+  </ion-card>
+
+  <ion-content class="ion-padding">
+      <div *ngIf="equipoId>0">
+      <ion-button color="warning" routerLink="/home"><ion-icon name="arrow-back-outline"></ion-icon>Volver</ion-button>
+      <ion-button color="primary" (click)="save(false)"><ion-icon name="save"></ion-icon>Actualizar</ion-button>
+      </div>
+      <div *ngIf="equipoId==0">
+        <ion-button color="warning" routerLink="/home"><ion-icon name="arrow-back-outline"></ion-icon>Volver</ion-button>
+        <ion-button color="primary" (click)="save(true)"><ion-icon name="save"></ion-icon>Guardar</ion-button>
+      </div>
+  </ion-content>
+
+  
+</ion-content>

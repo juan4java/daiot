@@ -1,0 +1,17 @@
+version: '0.1'
+
+services:
+    daiot-emqx-alone:
+        image:  emqx:5.0.24
+        restart: always
+        container_name:          daiot-emqx-alone
+        ports:
+            -                    "11883:1883"
+            -                    "18083:18083"
+        networks:
+        - daiot-net
+      
+
+networks:
+    daiot-net:
+        driver:                  bridge

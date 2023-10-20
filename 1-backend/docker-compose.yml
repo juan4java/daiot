@@ -1,0 +1,14 @@
+version: '0.1'
+
+services:
+    daiot-node-backend2:
+        image:                   daiot-be:latest
+        container_name:          daiot-node-backend2
+        networks:
+            -                    daiot-net
+        ports: 
+            -                    "3000:3000"
+
+networks:
+    daiot-net:
+        driver:                  bridge

@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{title}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-card>
+    <ion-card-header color="primary">
+      <ion-card-title>Lecturas {{dispositivo.nombre}}</ion-card-title>
+    </ion-card-header>
+
+    <ion-grid [fixed]="true">
+        <div *ngIf="medArray.length == 0">
+          <ion-col><ion-label color ="dark">No existen registros</ion-label></ion-col> 
+        </div>
+
+        <div *ngIf="medArray.length>0">
+          <ion-row>
+            <ion-col ><ion-label  color ="dark">Fecha</ion-label></ion-col>
+            <ion-col ><ion-label  color ="dark">Valor</ion-label></ion-col>
+            <ion-col ><ion-label  color ="dark">ID</ion-label></ion-col>
+          </ion-row>
+          
+          <div *ngFor="let med of medArray">
+            <ion-row appResaltar>
+              <ion-col ><ion-label >{{med.fecha | timePipe}}</ion-label></ion-col>
+              <ion-col ><ion-label >{{med.valor | parserUnitPipe: "KPa" : "Cb"  }}</ion-label></ion-col>
+              <ion-col ><ion-label >{{med.id}}</ion-label></ion-col>
+            </ion-row>
+          </div>
+        </div>
+    </ion-grid>
+  </ion-card>
+
+  <ion-content class="ion-padding">
+    <ion-button color="warning" routerLink="/dispositivo/{{dispositivo.equipoId}}"><ion-icon name="arrow-back-outline"></ion-icon>Volver</ion-button>
+    <ion-button color="primary" routerLink="/home" ><ion-icon name="home"></ion-icon>Home</ion-button>
+    </ion-content>
+</ion-content>

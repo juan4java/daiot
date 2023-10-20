@@ -1,0 +1,22 @@
+version: '0.1'
+
+services:
+
+    daiot-ionic-ui:
+        #image: 0-tp_final-daiot-ionic-ui
+        build:
+           context:                ./0-frontend
+           dockerfile:             Dockerfile
+        ports:
+            -                       "9000:8100"
+        container_name:           daiot-ionic-ui
+        volumes:
+            -                      ./0-frontend:/0-frontend
+            -                     /0-frontend/node_modules
+        command:                  ionic serve --external
+
+      
+
+networks:
+    daiot-net:
+        driver:                  bridge
